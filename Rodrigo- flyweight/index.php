@@ -126,3 +126,4 @@ addCarToPoliceDatabase($factory,
 );
 
 $factory->listFlyweights();
+
