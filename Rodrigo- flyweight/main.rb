@@ -90,3 +90,4 @@ add_car_to_police_database(factory, 'CL234IR', 'James Doe', 'BMW', 'X1', 'red')
 puts "\n\n"
 
 factory.list_flyweights
+
