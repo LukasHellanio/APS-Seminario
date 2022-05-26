@@ -1,23 +1,24 @@
 package singleton;
 
 public final class Singleton {
-	private static Singleton instance;
-    public String value;
+	private static Singleton instancia;
+    public String valorQualquer;
 
-    private Singleton(String value) {
-        // The following code emulates slow initialization.
+    //Abaixo temos o construtor da classe como privado.
+    private Singleton(String valorQualquer) {
         try {
             Thread.sleep(1000);
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         }
-        this.value = value;
+        this.valorQualquer = valorQualquer;
     }
-
-    public static Singleton getInstance(String value) {
-        if (instance == null) {
-            instance = new Singleton(value);
+    //Abaixo temos o método estático acessível que é chamado por outras classes para 
+    //poder modificar este objeto afim de reutilizá-lo
+    public static Singleton getinstancia(String valorQualquer) {
+        if (instancia == null) {
+            instancia = new Singleton(valorQualquer);
         }
-        return instance;
+        return instancia;
     }
 }
