@@ -1,6 +1,6 @@
 <?php
 
-namespace RefactoringGuru\Flyweight\Conceptual;
+namespace apsSeminario\Flyweight\Conceptual;
 
 /**
  * O Flyweight armazena uma parcela comum do estado (também chamada de estado intrínseco) 
