@@ -15,7 +15,7 @@ Você poderia mudar a biblioteca para que ela funcione com XML. Contudo, isso po
 Quando você viaja do Brasil para a Europa pela primeira vez, você pode ter uma pequena surpresa quando tenta carregar seu laptop. O plugue e os padrões de tomadas são diferentes em diferentes países. É por isso que seu plugue do Brasil não vai caber em uma tomada da Alemanha. O problema pode ser resolvido usando um adaptador de tomada que tenha o estilo de tomada Brasileira e o plugue no estilo Europeu.
 
 ###  Exemplos de código
- - [TypeScript](index.ts)
+ - [Java](index.java)
  - [PHP](index.php)
  - [python](main.py)
  

@@ -5,8 +5,8 @@ from typing import List
 
 class Component(ABC):
     """
-    The base Component class declares common operations for both simple and
-    complex objects of a composition.
+    Declaração da base que declara as operações comuns para ambos os objetos
+    simples e complexos de uma composição    
     """
 
     @property
@@ -16,53 +16,16 @@ class Component(ABC):
     @parent.setter
     def parent(self, parent: Component):
         """
-        Optionally, the base Component can declare an interface for setting and
-        accessing a parent of the component in a tree structure. It can also
-        provide some default implementation for these methods.
+        Componente base pode declarar uma interface para configuração e 
+        acessando um pai do componente em uma estrutura de árvore. 
         """
 
-        self._parent = parent  
-
-    """
-    In some cases, it would be beneficial to define the child-management
-    operations right in the base Component class. This way, you won't need to
-    expose any concrete component classes to the client code, even during the
-    object tree assembly. The downside is that these methods will be empty for
-    the leaf-level components.
-    """
-
-    def add(self, component: Component) -> None:
-        pass
-
-    def remove(self, component: Component) -> None:
-        pass
-
-    def is_composite(self) -> bool:
-        """
-        You can provide a method that lets the client code figure out whether a
-        component can bear children.
-        """
-
-        return False
-
-    @abstractmethod
-    def operation(self) -> str:
-        """
-        The base Component may implement some default behavior or leave it to
-        concrete classes (by declaring the method containing the behavior as
-        "abstract").
-        """
-
-        pass
-
+        self._parent = parent      
 
 class Leaf(Component):
     """
-    The Leaf class represents the end objects of a composition. A leaf can't
-    have any children.
-
-    Usually, it's the Leaf objects that do the actual work, whereas Composite
-    objects only delegate to their sub-components.
+    A classe Leaf representa os objetos finais de uma composição. Uma folha não pode
+    tem filhos.    
     """
 
     def operation(self) -> str:
@@ -70,20 +33,15 @@ class Leaf(Component):
 
 
 class Composite(Component):
-    """
-    The Composite class represents the complex components that may have
-    children. Usually, the Composite objects delegate the actual work to their
-    children and then "sum-up" the result.
+    """    
+    A classe Composite representa os componentes complexos que podem ter
+    filhos. 
     """
 
     def __init__(self) -> None:
         self._children: List[Component] = []
 
-    """
-    A composite object can add or remove other components (both simple or
-    complex) to or from its child list.
-    """
-
+    
     def add(self, component: Component) -> None:
         self._children.append(component)
         component.parent = self
@@ -97,31 +55,30 @@ class Composite(Component):
 
     def operation(self) -> str:
         """
-        The Composite executes its primary logic in a particular way. It
-        traverses recursively through all its children, collecting and summing
-        their results. Since the composite's children pass these calls to their
-        children and so forth, the whole object tree is traversed as a result.
+        O Composite executa sua lógica primária de uma maneira particular. Isto
+        percorre recursivamente por todos os seus filhos, coletando e somando
+        seus resultados. 
         """
 
         results = []
         for child in self._children:
             results.append(child.operation())
         return f"Branch({'+'.join(results)})"
-
+        # Não existe branch sem folhas 
 
 def client_code(component: Component) -> None:
     """
-    The client code works with all of the components via the base interface.
+    Esta função funciona com todos os componentes via interface base
     """
 
     print(f"RESULT: {component.operation()}", end="")
 
 
 def client_code2(component1: Component, component2: Component) -> None:
-    """
-    Thanks to the fact that the child-management operations are declared in the
-    base Component class, the client code can work with any component, simple or
-    complex, without depending on their concrete classes.
+    """    
+    Graças ao fato das operações de gestão de filhos serem declaradas no
+    classe base Component, o código cliente pode trabalhar com qualquer componente, simples ou
+    complexos, sem depender de suas classes concretas.
     """
 
     if component1.is_composite():
@@ -131,13 +88,12 @@ def client_code2(component1: Component, component2: Component) -> None:
 
 
 if __name__ == "__main__":
-    # This way the client code can support the simple leaf components...
+    
     simple = Leaf()
-    print("Client: I've got a simple component:")
+    print("Client: Possuo um componente simples:")
     client_code(simple)
     print("\n")
-
-    # ...as well as the complex composites.
+   
     tree = Composite()
 
     branch1 = Composite()
@@ -150,9 +106,9 @@ if __name__ == "__main__":
     tree.add(branch1)
     tree.add(branch2)
 
-    print("Client: Now I've got a composite tree:")
+    print("Client: Agora eu tenho uma árvore composta")
     client_code(tree)
     print("\n")
 
-    print("Client: I don't need to check the components classes even when managing the tree:")
+    print("Nao eh necessario checar as classes componentes mesmo gerenciando a arvore")
     client_code2(tree, simple)
